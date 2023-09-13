@@ -8,7 +8,7 @@ using namespace std;
 // king     4
 //  queen   5
 
-
+// pisello
 class piece{
 
     public:
