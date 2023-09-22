@@ -8,15 +8,20 @@ using namespace std;
 // king     4
 //  queen   5
 
-// pisello
+//pisello odoroso
+
 class piece{
 
     public:
         int id = 0;
+        char color; 
         bool avb_moves[8][8];
         int pos[2];
-        bool is_taken = true;
-    piece(int cpos[2]){
+        bool is_taken;
+
+    piece(int cpos[2], int id, char color){
+
+        int x = cpos[0], y = cpos[1];
 
         switch (id)
         {
@@ -25,7 +30,7 @@ class piece{
             for(int i=0; i<8; i++){
                 for (int j = 0; j<8; j++)
                 {
-                    if(cpos[0] == i && (cpos[1]+1 == j || cpos[1]+2 == j) ){
+                    if(x == i && (y+1 == j || y+2 == j) ){
                         avb_moves[i][j] = true;
                     }
                 }
@@ -36,7 +41,7 @@ class piece{
             for(int i=0; i<8; i++){
                 for (int j = 0; j<8; j++)
                 {
-                    if( (i-cpos[0]) == (j-cpos[1])){
+                    if( ((i-x) == (j-y)) || ((i-x) + (j+y) == x+y)){
                         avb_moves[i][j] = true;
                     }
                 }
@@ -47,7 +52,7 @@ class piece{
             for(int i=0; i<8; i++){
                 for (int j = 0; j<8; j++)
                 {
-                    if(cpos[0] == i || cpos[1] == j ){
+                    if(x == i || y == j ){
                         avb_moves[i][j] = true;
                     }
                 }
@@ -57,12 +62,20 @@ class piece{
         case 3:         //HORSE
             for(int i=0; i<8; i++){
                 for (int j = 0; j<8; j++)
-                {   
-                    int x = i-cpos[0];
-                    int y = j-cpos[1];
-
-                    if(((x <= 2) || (y <= 2)) && (x != y) && (i!=cpos[0] || j!= cpos[1])){
+                {
+                    if(i<=x+2 && j<=y+2 & i>=x-2 && j>=y-2){
                         avb_moves[i][j] = true;
+                    }
+                }
+            }
+
+            for(int i=0;i<8;i++){
+                for(int j=0;j<8;j++){
+                    if(x == i || y == j ){
+                        avb_moves[i][j] = false;
+                    }
+                    if( ((i-x) == (j-y)) || ((i-x) + (j+y) == x+y)){
+                        avb_moves[i][j] = false;
                     }
                 }
             }
@@ -72,7 +85,9 @@ class piece{
             for(int i=0; i<8; i++){
                 for (int j = 0; j<8; j++)
                 {
-                    // if()
+                    if(i<=x+1 && j<=y+1 & i>=x-1 && j>=y-1){
+                        avb_moves[i][j] = true;
+                    }
                 }
             }
             break;
@@ -81,7 +96,12 @@ class piece{
             for(int i=0; i<8; i++){
                 for (int j = 0; j<8; j++)
                 {
-                    
+                    if(x == i || y == j ){
+                        avb_moves[i][j] = true;
+                    }
+                    if( ((i-x) == (j-y)) || ((i-x) + (j+y) == x+y)){
+                        avb_moves[i][j] = true;
+                    }
                 }
             }
             break;
@@ -90,10 +110,29 @@ class piece{
             cout << "Errore nella creazione del pezzo";
             break;
         }
+
+        if(color == 'b'){
+            for(int i=0;i<8; i++){
+                for(int j=0; j<8; j++){
+                    bool tmp = avb_moves[i][j];
+                    avb_moves[i][j] = avb_moves[8-i][j];
+                    avb_moves[8-i][j] = tmp;
+                }
+            }
+        } 
+
     }
 };
 
-
+void prtMoves(piece p){
+    for(int i=0; i<8; i++){
+        for(int j=0;j<8;j++){
+            if(p.avb_moves[j][i]) printf("1 ");
+            else printf("0 ");
+        }
+        printf("\n");
+    }
+}
 
 class board{
     public:
@@ -102,5 +141,9 @@ class board{
 };
 
 int main(){
-    
+
+    int pos[2]= {4,4};
+    piece pedone(pos,0,'b');
+    prtMoves(pedone);
+
 }
