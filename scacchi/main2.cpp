@@ -222,6 +222,7 @@ int* move(){
     p[1] = a[1];
     return p;
 
+
 }
 
 void init_game(board b){
