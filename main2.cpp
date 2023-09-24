@@ -211,17 +211,24 @@ void prtBoard(board b){
     }
 }
 
-int* move(){
+int* conv_move(string a){
     
-    string a;
-    cin >> a;
-    int p[2];
+    static int p[2];
+
     if(a[0]<= 72 && a[0]>64) p[0]= a[0]-65;
     else if(a[0]<= 104 && a[0]>96) p[0]= a[0]-97;
     else cout << "wrong notation";
-    p[1] = a[1];
+
+    if(a[1]<= 58 && a[1]>48) p[1]= a[1]-49;
+    else cout << "wrong notation"; return NULL;
+
     return p;
-    //
+}
+
+void mv_piece(board b,int p1[2], int p2[2]){
+
+    b.current[p2[0]][p2[1]].mv(b.current[p1[0]][p1[1]].id,b.current[p2[0]][p2[1]].color);
+
 
 }
 
@@ -242,10 +249,7 @@ void init_game(board b){
 int main(){
 
     board b;
-    // init_game(b);
 
-    int *p;
-    p = move();
-    cout << p[0];
+    // init_game(b);
     
 }
