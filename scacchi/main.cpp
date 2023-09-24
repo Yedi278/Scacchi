@@ -1,6 +1,15 @@
 #include <iostream>
 using namespace std;
 
+#define RED   "\x1B[31m"
+#define GRN   "\x1B[32m"
+#define YEL   "\x1B[33m"
+#define BLU   "\x1B[34m"
+#define MAG   "\x1B[35m"
+#define CYN   "\x1B[36m"
+#define WHT   "\x1B[37m"
+#define RESET "\x1B[0m"
+
 //pisello odoroso
 // P , B , R , H , K , Q
 
@@ -126,7 +135,6 @@ class piece{
     }
 };
 
-
 void prtMoves(piece p){
     for(int i=0; i<8; i++){
         for(int j=0;j<8;j++){
@@ -155,7 +163,8 @@ void board::init_board(){
         } 
     }
 
-    for(int i=0;i<8;i++){   //PAWNS
+    //PAWNS
+    for(int i=0;i<8;i++){   
 
         current[1][i].mv(1,'b');
         
@@ -165,56 +174,77 @@ void board::init_board(){
     //Rooks
     current[0][0].mv(3,'b');
     current[0][7].mv(3,'b');
-    current[7][0].mv(3,'b');
-    current[7][7].mv(3,'b');
+    current[7][0].mv(3,'w');
+    current[7][7].mv(3,'w');
     //Bishops
     current[0][2].mv(2,'b');
-    current[7][2].mv(2,'b');
+    current[7][2].mv(2,'w');
     current[0][5].mv(2,'b');
-    current[7][5].mv(2,'b');
+    current[7][5].mv(2,'w');
     //Horses
     current[0][1].mv(4,'b');
     current[0][6].mv(4,'b');
-    current[7][1].mv(4,'b');
-    current[7][6].mv(4,'b');
+    current[7][1].mv(4,'w');
+    current[7][6].mv(4,'w');
     //Queens
     current[0][3].mv(6,'b');
     current[7][3].mv(6,'w');
     //Kings
     current[0][4].mv(5,'b');
     current[7][4].mv(5,'w');
-
-
-
-    
-
-
-    
     
 }
 
 void prtBoard(board b){
+
     for(int i=0;i<8;i++){
         for(int j=0;j<8;j++){
             if(b.current[i][j].id == 0) cout<<"O ";
-            if(b.current[i][j].id == 1) cout<<"P ";
-            if(b.current[i][j].id == 2) cout<<"B ";
-            if(b.current[i][j].id == 3) cout<<"R ";
-            if(b.current[i][j].id == 4) cout<<"H ";
-            if(b.current[i][j].id == 5) cout<<"K ";
-            if(b.current[i][j].id == 6) cout<<"Q ";
+            if(b.current[i][j].id == 1) if(b.current[i][j].color == 'w') cout<<"P "; else if(b.current[i][j].color == 'b') cout << RED "P " << RESET;
+            if(b.current[i][j].id == 2) if(b.current[i][j].color == 'w') cout<<"B "; else if(b.current[i][j].color == 'b') cout << RED "B " << RESET;
+            if(b.current[i][j].id == 3) if(b.current[i][j].color == 'w') cout<<"R "; else if(b.current[i][j].color == 'b') cout << RED "R " << RESET;
+            if(b.current[i][j].id == 4) if(b.current[i][j].color == 'w') cout<<"H "; else if(b.current[i][j].color == 'b') cout << RED "H " << RESET;
+            if(b.current[i][j].id == 5) if(b.current[i][j].color == 'w') cout<<"K "; else if(b.current[i][j].color == 'b') cout << RED "K " << RESET;
+            if(b.current[i][j].id == 6) if(b.current[i][j].color == 'w') cout<<"Q "; else if(b.current[i][j].color == 'b') cout << RED "Q " << RESET;
         }
         cout<<endl;
     }
+}
+
+int* move(){
+    
+    string a;
+    cin >> a;
+    int p[2];
+    if(a[0]<= 72 && a[0]>64) p[0]= a[0]-65;
+    else if(a[0]<= 104 && a[0]>96) p[0]= a[0]-97;
+    else cout << "wrong notation";
+    p[1] = a[1];
+    return p;
+
+}
+
+void init_game(board b){
+    
+    b.init_board();
+    prtBoard(b);
+    bool isGameOver = false;
+
+    // while(!isGameOver){
+    //     cout << "Che mossa vuoi fare?";
+    
+    // }
+    
 }
 
 
 int main(){
 
     board b;
-    b.init_board();
-    // cout << b.current[0][0].id << endl;
-    // prtMoves(b.current[1][0]);
-    prtBoard(b);
+    // init_game(b);
+
+    int *p;
+    p = move();
+    cout << p[0];
     
 }
