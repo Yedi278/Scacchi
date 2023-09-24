@@ -221,7 +221,7 @@ int* move(){
     else cout << "wrong notation";
     p[1] = a[1];
     return p;
-
+    //
 
 }
 
