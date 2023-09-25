@@ -217,7 +217,7 @@ int* conv_move(string a){
 
     if(a[0]<= 72 && a[0]>64) p[0]= a[0]-65;
     else if(a[0]<= 104 && a[0]>96) p[0]= a[0]-97;
-    else cout << "wrong notation";
+    else cout << "wrong notation";  return NULL;
 
     if(a[1]<= 58 && a[1]>48) p[1]= a[1]-49;
     else cout << "wrong notation"; return NULL;
@@ -225,31 +225,33 @@ int* conv_move(string a){
     return p;
 }
 
-void mv_piece(board b,int p1[2], int p2[2]){
+board mv_piece(board a,int p1[2], int p2[2]){
 
+    board b;
     b.current[p2[0]][p2[1]].mv(b.current[p1[0]][p1[1]].id,b.current[p2[0]][p2[1]].color);
-
-
+    return b;
 }
 
-void init_game(board b){
-    
+board init_game(board b){
+    board b;
     b.init_board();
     prtBoard(b);
     bool isGameOver = false;
-
+    int p1[2]= {1,0};
+    int p2[2]= {2,0};
+    cout<<endl;
+    mv_piece(b,p1,p2);
+    // prtBoard(b);
     // while(!isGameOver){
     //     cout << "Che mossa vuoi fare?";
-    
     // }
-    
+    return b;
 }
 
 
 int main(){
 
     board b;
-
-    // init_game(b);
+    
     
 }
